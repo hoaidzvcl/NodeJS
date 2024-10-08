@@ -8,18 +8,13 @@ const app = express(); //App express
 const port = process.env.PORT || 8888; //Cấu hình port
 const hostname = process.env.HOST_NAME;
 
+//config res.body
+app.use(express.json()) // for json
+app.use(express.urlencoded({ extended: true })) // for form data
+
 viewConfig(app);
 
 app.use('/', webRoutes);
-
-// A simple SELECT query
-connection.query(
-  'select * from Users u',
-  function (err, results, fields) {
-    console.log(results); // results contains rows returned by server
-    console.log(fields); // fields contains extra meta data about results, if available
-  }
-)
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`)
