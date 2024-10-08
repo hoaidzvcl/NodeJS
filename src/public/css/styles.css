@@ -4,7 +4,7 @@
 }
 
 .form-add-user {
-    width: 500px;
+    width: 300px;
     margin: 50px auto;
 }
 
@@ -14,4 +14,8 @@
 
 button {
     margin: 10px;
+}
+
+lengend {
+    padding: 0 32%;
 }
