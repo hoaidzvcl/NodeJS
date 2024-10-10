@@ -1,9 +1,9 @@
 const connection = require('../config/database');
-const {getAllusers, getUser} = require('../services/CRUDService');
+const { getAllusers, createUser, getUser, updateUser, deleteUser } = require('../services/CRUDService');
 
 const homePage = async (req, res) => {
     let results = await getAllusers();
-    return res.render('homePage', {listUsers: results});
+    return res.render('homePage', { listUsers: results });
 }
 
 const createPage = (req, res) => {
@@ -13,25 +13,53 @@ const createPage = (req, res) => {
 const getUpdate = async (req, res) => {
     let userId = req.params.id;
     let results = await getUser(userId);
-    res.render('update', {infoUser: results});
+    res.render('update', { infoUser: results });
 }
 
-const createUser = async (req, res) => {
+const postCreateUser = async (req, res) => {
     let email = req.body.email;
     let name = req.body.name;
     let city = req.body.city;
 
-    console.log(email,name,city);
+    console.log(email, name, city);
 
-    let[results, fields] = await connection.query(
-        `INSERT INTO Users (email,name,city) VALUES (?,?,?)`, [email,name,city],
-    );
-    res.send('ok');
+    await createUser(email, name, city);
+    res.redirect('/');
+}
+
+const postUpdateUser = async (req, res) => {
+    let userId = req.params.id;
+    let email = req.body.email;
+    let name = req.body.name;
+    let city = req.body.city;
+
+    await updateUser(email, name, city, userId);
+    res.redirect('/');
+}
+
+const getDelete = async (req, res) => {
+    let userId = req.params.id;
+    let results = await getUser(userId);
+    res.render('deletePage', { infoUser: results });
+}
+
+const confirmDelete = async (req, res) => {
+    const userId = req.params.id;
+    const result = await deleteUser(userId);
+    if (result.success) {
+        // res.send(`Người dùng với id ${userId} đã được xóa thành công!`);
+        res.redirect('/');
+    } else {
+        res.send(`Có lỗi khi xóa người dùng với id ${userId}.`);
+    }
 }
 
 module.exports = {
     homePage,
     createPage,
-    createUser,
-    getUpdate
+    postCreateUser,
+    getUpdate,
+    postUpdateUser,
+    getDelete,
+    confirmDelete
 }

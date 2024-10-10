@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete</title>
+</head>
+
+<script>
+    var id = '<%- infoUser.id %>';
+    var name = '<%- infoUser.name %>';
+    var email = '<%- infoUser.email %>';
+
+    if (confirm(`Bạn có chắc chắn muốn xóa người dùng ${name}?`)) {
+        // Nếu người dùng nhấn "OK", điều hướng đến route xóa người dùng
+        window.location.href = `/confirmDelete/${id}`;
+    } else {
+        alert("Hủy thao tác xóa.");
+    }
+</script>
+
+<body>
+
+</body>
+
+</html>
