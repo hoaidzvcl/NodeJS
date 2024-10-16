@@ -3,6 +3,7 @@ const express = require('express');
 const viewConfig = require('./config/viewEngine');
 const webRoutes = require('./routes/web');
 const connection = require('./config/database');
+const apiRoutes = require('./routes/api');
 
 const app = express(); //App express
 const port = process.env.PORT || 8888; //Cấu hình port
@@ -15,6 +16,7 @@ app.use(express.urlencoded({ extended: true })) // for form data
 viewConfig(app);
 
 app.use('/', webRoutes);
+app.use('/v1/api', apiRoutes);
 
 (async () => {
   try {

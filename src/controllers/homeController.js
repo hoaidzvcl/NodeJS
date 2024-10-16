@@ -38,7 +38,7 @@ const postUpdateUser = async (req, res) => {
     let name = req.body.name;
     let city = req.body.city;
 
-    await User.updateOne({_id: userId},{name: name, email: email, city: city});
+    await User.updateOne({ _id: userId }, { name: name, email: email, city: city });
     // await updateUser(email, name, city, userId);
     res.redirect('/');
 }
@@ -53,13 +53,13 @@ const getDelete = async (req, res) => {
 const confirmDelete = async (req, res) => {
     const userId = req.params.id;
     // const result = await deleteUser(userId);
-    const result = await User.deleteOne({_id: userId});
+    const result = await User.deleteOne({ _id: userId });
     if (result.acknowledged && result.deletedCount > 0) {
         res.redirect('/');
     } else {
         res.send(`Có lỗi khi xóa người dùng với id ${userId}.`);
     }
-    
+
 }
 
 module.exports = {
@@ -69,5 +69,5 @@ module.exports = {
     getUpdate,
     postUpdateUser,
     getDelete,
-    confirmDelete
+    confirmDelete,
 }
